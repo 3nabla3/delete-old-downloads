@@ -1,0 +1,10 @@
+[Unit]
+Description=Deletes downloads older than 30 days
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/delete_old_downloads.sh 
+
+[Install]
+WantedBy=multi-user.target

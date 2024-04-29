@@ -1,0 +1,4 @@
+#!/bin/bash
+
+USERNAME=$(logname)
+echo $USERNAME >> /etc/delete-old-downloads/users.list
