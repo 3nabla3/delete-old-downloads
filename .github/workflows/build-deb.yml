@@ -22,9 +22,11 @@ jobs:
       run: |
         cd ../
         dpkg-deb --build delete-old-downloads
+        pwd
+        ls -la
 
     - name: Upload Debian package artifact
       uses: actions/upload-artifact@v4
       with:
         name: delete-old-downloads
-        path: delete-old-downloads.deb
+        path: /delete-old-downloads.deb
