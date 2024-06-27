@@ -27,5 +27,14 @@ jobs:
     - name: Upload Debian package artifact
       uses: actions/upload-artifact@v4
       with:
-        name: delete-old-downloads
+        name: delete-old-downloads.deb
         path: delete-old-downloads.deb
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: delete-old-downloads.deb
+        asset_name: delete-old-downloads.deb
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "This is my release text"
