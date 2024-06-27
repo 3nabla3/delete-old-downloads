@@ -1,0 +1,9 @@
+[Unit]
+Description=Run Clean Downloads script hourly
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
