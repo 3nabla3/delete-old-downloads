@@ -1,0 +1,30 @@
+name: Build Debian Package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Debian package building environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y dpkg-dev
+
+    - name: Build Debian package
+      run: |
+        cd ../
+        dpkg-deb --build delete-old-downloads
+
+    - name: Upload Debian package artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: delete-old-downloads
+        path: delete-old-downloads.deb
