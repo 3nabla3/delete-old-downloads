@@ -1,0 +1,4 @@
+# a list of users and the max file age in days (default 14)
+# ex:
+# 
+# user:30

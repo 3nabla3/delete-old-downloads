@@ -1,4 +1,5 @@
 #!/bin/bash
 
 USERNAME=$(logname)
-echo $USERNAME >> /etc/delete-old-downloads/users.list
+# default to 30 days
+echo $USERNAME:30 >> /etc/delete-old-downloads/users.list

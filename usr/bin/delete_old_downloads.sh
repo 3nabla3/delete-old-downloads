@@ -1,7 +1,15 @@
 #!/bin/bash
 
-for user in $(cat /etc/delete-old-downloads/users.list); do
-	echo "User: $user"
+for line in $(cat /etc/delete-old-downloads/users.list); do
+	user=$(echo line | awk -F: '{print $1}')
+	days=$(echo line | awk -F: '{print $2}')
+
+	if [[ -z $days ]]; then
+		# default to 30 days
+		days=30
+	fi
+
+	echo "User: $user ($days days)"
 
 	DIR=$(sudo -u "$user" xdg-user-dir DOWNLOAD)
 
@@ -22,7 +30,12 @@ for user in $(cat /etc/delete-old-downloads/users.list); do
 	fi
 
 	date
-	find $DIR -maxdepth 1 -mtime +30 -print
+	results=$(find $DIR -maxdepth 1 -mtime +$days -print -delete)
+	if [[ -z results ]]; then
+		echo "Nothing to delete"
+	else
+		echo $a
+	fi
 done
 
 exit 0
