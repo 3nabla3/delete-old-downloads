@@ -21,7 +21,8 @@ jobs:
 
     - name: Build Debian package
       run: |
-        echo "Version: ${{ github.ref_name }}" >> DEBIAN/control
+        version=$(echo ${{ github.ref_name }} | tr -d v)
+        echo "Version: $version" >> DEBIAN/control
         cd ../
         dpkg-deb --build delete-old-downloads
         mv delete-old-downloads.deb delete-old-downloads/
