@@ -2,4 +2,3 @@ Package: delete-old-downloads
 Architecture: all
 Maintainer: Alban Guyon <albanguyon@yahoo.fr>
 Description: Deletes files in your XDG_DOWNLOAD_DIR folder if they have not been modified in the specified number of days
-Version: 0.0.2
