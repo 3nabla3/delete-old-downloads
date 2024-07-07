@@ -21,6 +21,7 @@ jobs:
 
     - name: Build Debian package
       run: |
+        echo "Version: ${{ github.ref_name }}" >> DEBIAN/control
         cd ../
         dpkg-deb --build delete-old-downloads
         mv delete-old-downloads.deb delete-old-downloads/
@@ -38,4 +39,4 @@ jobs:
         asset_name: delete-old-downloads.deb
         tag: ${{ github.ref }}
         overwrite: true
-        body: "This is my release text"
+        body: "Latest release of the package"
