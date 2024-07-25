@@ -6,7 +6,7 @@ delete-old-downloads.deb is a package that scans your ~/Downloads folder and rem
 
 ## How to install?
 
-Go to the [releases](/releases) and download the latest `delete-old-downloads.deb` package then run:
+Go to the [lastest release](https://github.com/3nabla3/delete-old-downloads/releases/latest) and download `delete-old-downloads.deb` then run:
 
 `sudo apt install ./delete-old-downloads.deb`
 
