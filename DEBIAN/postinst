@@ -22,7 +22,7 @@ else
 fi
 
 # If the user is not on the list
-if ! grep -E "^$USERNAME(:|$)" $USER_LIST; then
+if ! grep -E "^$USERNAME(:|$)" $CONFIG_FILE; then
     # default to 30 days
     echo $USERNAME:30 >> "$CONFIG_FILE"
 fi
