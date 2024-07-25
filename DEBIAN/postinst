@@ -1,12 +1,27 @@
 #!/bin/bash
-
 # Add the current user to the list of users to 
 # clean the Downloads of
-USERNAME=$(logname)
-USER_LIST="/etc/delete-old-downloads/users.list"
+
+CONFIG_FILE="/etc/delete-old-downloads/users.list"
+DEFAULT_CONFIG_FILE="/usr/share/your-package/users.list"
+
+# Check if the configuration file exists
+if [ ! -f "$CONFIG_FILE" ]; then
+    # Copy the default configuration file if it does not exist
+    cp "$DEFAULT_CONFIG_FILE" "$CONFIG_FILE"
+fi
+
+# Get the username of the user who is installing the package
+if [ -n "$SUDO_USER" ]; then
+    USERNAME="$SUDO_USER"
+else
+    USERNAME=$(whoami)
+fi
 
 # If the user is not on the list
 if ! grep -E "^$USERNAME(:|$)" $USER_LIST; then
     # default to 30 days
-    echo $USERNAME:30 >> /etc/delete-old-downloads/users.list
+    echo $USERNAME:30 >> "$CONFIG_FILE"
 fi
+
+exit 0
