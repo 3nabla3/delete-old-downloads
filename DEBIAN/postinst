@@ -2,6 +2,8 @@
 # Add the current user to the list of users to 
 # clean the Downloads of
 
+set -e
+
 CONFIG_FILE="/etc/delete-old-downloads/users.list"
 DEFAULT_CONFIG_FILE="/usr/share/delete-old-downloads/users.list"
 
