@@ -35,7 +35,8 @@ while read line; do
 	fi
 
 	date
-	results=$(find $DIR -maxdepth 1 -mtime +$days -print -delete)
+	# we cant use -delete because it wont delete non empty dirs
+	results=$(find $DIR -maxdepth 1 -mtime +$days -print -exec rm -rf {} \;)
 	if [[ -z results ]]; then
 		echo "Nothing to delete"
 	else

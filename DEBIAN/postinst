@@ -6,7 +6,7 @@ USERNAME=$(logname)
 USER_LIST="/etc/delete-old-downloads/users.list"
 
 # If the user is not on the list
-if [[ grep -E "^$USERNAME(:|$)" $USER_LIST ]]; then
+if ! grep -E "^$USERNAME(:|$)" $USER_LIST; then
     # default to 30 days
     echo $USERNAME:30 >> /etc/delete-old-downloads/users.list
 fi
