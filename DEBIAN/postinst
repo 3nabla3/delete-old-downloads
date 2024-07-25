@@ -5,6 +5,9 @@
 CONFIG_FILE="/etc/delete-old-downloads/users.list"
 DEFAULT_CONFIG_FILE="/usr/share/delete-old-downloads/users.list"
 
+# Ensure the directory exists
+mkdir -p /etc/delete-old-downloads
+
 # Check if the configuration file exists
 if [ ! -f "$CONFIG_FILE" ]; then
     # Copy the default configuration file if it does not exist
