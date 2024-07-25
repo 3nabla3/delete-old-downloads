@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Add the current user to the list of users to 
+# clean the Downloads of
 USERNAME=$(logname)
-# default to 30 days
-echo $USERNAME:30 >> /etc/delete-old-downloads/users.list
+USER_LIST="/etc/delete-old-downloads/users.list"
+
+# If the user is not on the list
+if [[ grep -E "^$USERNAME(:|$)" $USER_LIST ]]; then
+    # default to 30 days
+    echo $USERNAME:30 >> /etc/delete-old-downloads/users.list
+fi

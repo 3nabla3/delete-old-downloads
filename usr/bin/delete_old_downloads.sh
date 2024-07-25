@@ -1,8 +1,9 @@
 #!/bin/bash
 
-for line in $(cat /etc/delete-old-downloads/users.list); do
-	user=$(echo line | awk -F: '{print $1}')
-	days=$(echo line | awk -F: '{print $2}')
+grep "^[^#]" etc/delete-old-downloads/users.list |
+while read line; do
+	user=$(echo $line | awk -F: '{print $1}')
+	days=$(echo $line | awk -F: '{print $2}')
 
 	if [[ -z $days ]]; then
 		# default to 30 days
@@ -12,6 +13,10 @@ for line in $(cat /etc/delete-old-downloads/users.list); do
 	echo "User: $user ($days days)"
 
 	DIR=$(sudo -u "$user" xdg-user-dir DOWNLOAD)
+	if [[ $? -eq 1 ]]; then
+		echo "Could not get download directory for user $user"
+		continue;
+	fi
 
 	# if the download directory is not than 3 levels deep, it is suspicious
 	if ! [[ "$DIR" =~ ^(\/[A-Za-z0-9\ -]+){3,}$ ]]; then
@@ -34,8 +39,8 @@ for line in $(cat /etc/delete-old-downloads/users.list); do
 	if [[ -z results ]]; then
 		echo "Nothing to delete"
 	else
-		echo $a
+		echo "$results"
 	fi
-done
+done 
 
 exit 0
