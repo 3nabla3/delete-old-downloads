@@ -3,7 +3,7 @@
 # clean the Downloads of
 
 CONFIG_FILE="/etc/delete-old-downloads/users.list"
-DEFAULT_CONFIG_FILE="/usr/share/your-package/users.list"
+DEFAULT_CONFIG_FILE="/usr/share/delete-old-downloads/users.list"
 
 # Check if the configuration file exists
 if [ ! -f "$CONFIG_FILE" ]; then
