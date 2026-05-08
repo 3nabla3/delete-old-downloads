@@ -1,6 +1,6 @@
 #!/bin/bash
 
-grep "^[^#]" etc/delete-old-downloads/users.list |
+grep "^[^#]" /etc/delete-old-downloads/users.list |
 while read -r line; do
 	user=$(echo "$line" | awk -F: '{print $1}')
 	days=$(echo "$line" | awk -F: '{print $2}')
