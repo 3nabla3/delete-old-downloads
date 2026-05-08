@@ -1,9 +1,9 @@
 #!/bin/bash
 
 grep "^[^#]" etc/delete-old-downloads/users.list |
-while read line; do
-	user=$(echo $line | awk -F: '{print $1}')
-	days=$(echo $line | awk -F: '{print $2}')
+while read -r line; do
+	user=$(echo "$line" | awk -F: '{print $1}')
+	days=$(echo "$line" | awk -F: '{print $2}')
 
 	if [[ -z $days ]]; then
 		# default to 30 days
@@ -18,14 +18,16 @@ while read line; do
 		continue;
 	fi
 
-	# if the download directory is not than 3 levels deep, it is suspicious
-	if ! [[ "$DIR" =~ ^(\/[A-Za-z0-9\ -]+){3,}$ ]]; then
-		echo "Suspicious download directory"
+	if [ -z "$DIR" ]; then
+		echo "Could not find download directory for user $user"
 		continue;
 	fi
 
-	if [ -z "$DIR" ]; then
-		echo "could not find download directory"
+	# guard against shallow or non-canonical paths (e.g. xdg-user-dir returning / or /tmp)
+	REAL_DIR=$(realpath "$DIR" 2>/dev/null)
+	depth=$(echo "$REAL_DIR" | tr -cd '/' | wc -c)
+	if [[ $depth -lt 3 ]]; then
+		echo "Suspicious download directory for user $user: $DIR"
 		continue;
 	fi
 
@@ -36,8 +38,8 @@ while read line; do
 
 	date
 	# we cant use -delete because it wont delete non empty dirs
-	results=$(find $DIR -maxdepth 1 -mtime +$days -print -exec rm -rf {} \;)
-	if [[ -z results ]]; then
+	results=$(find "$DIR" -maxdepth 1 -mtime +"$days" -print -exec rm -rf {} \;)
+	if [[ -z $results ]]; then
 		echo "Nothing to delete"
 	else
 		echo "$results"
